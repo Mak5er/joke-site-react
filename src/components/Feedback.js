@@ -35,7 +35,7 @@ const Feedback = () => {
         console.log(idea)
 
         try {
-            const response = await axios.post('http://127.0.0.1:5000/send_idea', {
+            const response = await axios.post('https://anecdoty-api.onrender.com/send_idea', {
                 idea
             })
             handleClose();
