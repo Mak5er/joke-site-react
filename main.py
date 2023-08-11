@@ -1,14 +1,18 @@
 import os
 import random
 import sqlite3
-import time
 
 import requests
 from urllib.parse import quote
 from dotenv import load_dotenv
-from flask import Flask, render_template, jsonify, request
+from flask import Flask, jsonify, request
+from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
+
+cors = CORS(app)
+
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 load_dotenv()
 
@@ -32,32 +36,25 @@ def get_random_joke():
     else:
         return "У базі даних немає анекдотів."
 
-
+@cross_origin()
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    random_joke = get_random_joke()
-    return render_template('index.html', random_joke=random_joke)
+    return ('helloworld')
 
 
 last_request_time = 0
 
-
-@app.route('/get_random_joke', methods=['POST'])
+@cross_origin()
+@app.route('/get_random_joke', methods=['GET'])
 def get_random_joke_ajax():
-    global last_request_time
-    current_time = time.time()
-
-    if current_time - last_request_time >= 1:  # Перевірка, чи пройшла 1 секунда з останнього запиту
-        last_request_time = current_time  # Оновлюємо час останнього запиту
-        random_joke = get_random_joke()
-        return jsonify(random_joke)
-    else:
-        pass
+    joke = get_random_joke()
+    return jsonify({'joke': joke})
 
 
+@cross_origin()
 @app.route('/send_idea', methods=['POST'])
 def send_idea():
-    idea = request.form['idea']
+    idea = request.json['idea']
     encoded_idea = quote(idea)
     message = f'/sendMessage?chat_id={chat_id}&text=*Нова ідея*: \n`{encoded_idea}`&parse_mode=MarkdownV2'
     response = requests.get(bot_api_url + message)
