@@ -1,9 +1,9 @@
 import os
 import random
 import sqlite3
+from urllib.parse import quote
 
 import requests
-from urllib.parse import quote
 from dotenv import load_dotenv
 from flask import Flask, jsonify, request
 from flask_cors import CORS, cross_origin
@@ -36,13 +36,15 @@ def get_random_joke():
     else:
         return "У базі даних немає анекдотів."
 
+
 @cross_origin()
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    return ('helloworld')
+    return 'helloworld'
 
 
 last_request_time = 0
+
 
 @cross_origin()
 @app.route('/get_random_joke', methods=['GET'])
