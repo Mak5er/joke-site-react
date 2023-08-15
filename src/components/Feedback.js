@@ -1,5 +1,5 @@
 import React from "react";
-import {Button} from "@mui/material";
+import {Button, InputAdornment, TextField} from "@mui/material";
 import Backdrop from '@mui/material/Backdrop';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
@@ -21,32 +21,42 @@ const style = {
     p: '4',
 };
 
+
 const Feedback = () => {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => {
         setOpen(false);
         setIdea('')
+        setError('')
     }
     const [idea, setIdea] = React.useState('');
 
+    const [error, setError] = React.useState('');
+
 
     const sendIdea = async () => {
-        console.log(idea)
+        if (idea.trim() === "") {
+            setError("Поле не може бути порожнім!")
+            return;
+        }
 
         try {
-            const response = await axios.post('https://anecdoty-api.onrender.com/send_idea', {
-                idea
-            })
+            const response = await axios.post(
+                "https://anecdoty-api.onrender.com/send_idea",
+                {
+                    idea,
+                }
+            );
             handleClose();
             console.log(response);
         } catch (error) {
-            console.error('Помилка при відправці ідеї:', error);
+            console.error("Помилка при відправці ідеї:", error);
         }
-        ;
 
-        setIdea('')
-    }
+        setIdea("");
+    };
+
 
     return (
         <div className="contact-us">
@@ -71,28 +81,32 @@ const Feedback = () => {
                                 sx={{color: '#3bd671', fontSize: '20px'}}/></IconButton>
                             <h2>Ваша ідея або анекдот:</h2>
                             <div className="input-container">
-                                <textarea className="idea-input" value={idea}
-                                          onChange={event => setIdea(event.target.value)} rows="4"
-                                          placeholder="Напишіть вашу ідею або анекдот..."></textarea>
-                                <IconButton style={{
-                                    top: '50%',
-                                    right: -10,
-                                    transform: 'translateY(-50%)',
-                                    position: 'absolute'
-                                }} size="small" onClick={() => {
-                                    setIdea('')
-                                }}><HighlightOffIcon
-                                    sx={{color: '#3bd671', fontSize: '20px'}}/></IconButton>
-                            </div>
-                            <Stack direction="row" spacing={1}>
-                                <Button size='small' variant="outlined" color="error" onClick={() => {
-                                    setOpen(false);
-                                    setIdea('')
-                                }}>Скасувати</Button>
+                                <TextField id="full-width"
+                                           InputProps={{
+                                               className: 'idea-input',
+                                               endAdornment: (<InputAdornment onClick={() => setIdea('')} position="end"><HighlightOffIcon sx={{
+                                                   color: '#3bd671', fontSize: '20px' }}/> < /InputAdornment>)}}
+                                                   variant = "outlined"
+                                                   value = {idea}
+                                                   onChange = {(event) => {setIdea(event.target.value); setError('')}}
+                                                   multiline
+                                                   rows={4}
+                                                   placeholder="Напишіть вашу ідею або анекдот..."
+                                                   fullWidth
+                                                   error={!!error}
+                                                   helperText={error}
+                                                   />
+                                               </div>
+                                               <Stack direction="row" spacing={1}>
+                                    <Button size='small' variant="outlined" color="error" onClick={() => {
+                                        setOpen(false);
+                                        setIdea('');
+                                        setError('');
+                                    }}>Скасувати</Button>
 
-                                <Button size='small' variant="contained" onClick={sendIdea}>Відправити</Button>
-                            </Stack>
-                        </div>
+                                    <Button size='small' variant="contained" onClick={sendIdea}>Відправити</Button>
+                                </Stack>
+                            </div>
                     </Box>
                 </Fade>
             </Modal>
@@ -100,4 +114,4 @@ const Feedback = () => {
     );
 }
 
-export default Feedback
+    export default Feedback

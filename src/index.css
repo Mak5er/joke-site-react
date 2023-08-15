@@ -92,7 +92,6 @@ body {
 .input-container {
     position: relative;
     margin-bottom: 10px;
-    margin-right: 20px;
 }
 
 .idea-input {
@@ -100,7 +99,7 @@ body {
     padding: 10px;
     border: none;
     background-color: #131a26;
-    color: white;
+    color: white !important;
     font-size: 16px;
     border-radius: 5px;
     outline: none;
