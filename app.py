@@ -9,7 +9,7 @@ from flask import Flask, jsonify, request
 from flask.helpers import send_from_directory
 from flask_cors import CORS, cross_origin
 
-app = Flask(__name__, static_folder='joke-site/build', static_folder='')
+app = Flask(__name__, static_folder='joke-site/build', static_url_path='')
 
 cors = CORS(app)
 
