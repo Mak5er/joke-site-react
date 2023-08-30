@@ -43,7 +43,7 @@ const Feedback = () => {
 
         try {
             const response = await axios.post(
-                "http://localhost:8000//api/send_idea",
+                "http://localhost:10000//api/send_idea",
                 {
                     idea,
                 }
