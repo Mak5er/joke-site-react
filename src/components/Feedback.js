@@ -43,7 +43,7 @@ const Feedback = () => {
 
         try {
             const response = await axios.post(
-                "https://anecdoty-api.onrender.com/send_idea",
+                "/send_idea",
                 {
                     idea,
                 }
