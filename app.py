@@ -40,7 +40,7 @@ def get_random_joke():
 @cross_origin()
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    return 'helloworld'
+    return 'helloworld!'
 
 
 last_request_time = 0
