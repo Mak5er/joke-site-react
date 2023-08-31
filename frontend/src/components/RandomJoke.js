@@ -9,7 +9,7 @@ const RandomJoke = () => {
     const [disabled, setDisabled] = React.useState(false);
     const getJoke = async () => { if (disabled) return; setDisabled(true);
         const {data} = await axios
-            .get("http://localhost:10000//api/get_random_joke");
+            .get("http://localhost:10000/api/get_random_joke");
         setJoke(data.joke)
         setTimeout(() => {
             setDisabled(false);
