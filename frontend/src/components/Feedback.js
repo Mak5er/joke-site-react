@@ -9,6 +9,7 @@ import IconButton from '@mui/material/IconButton';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import ClearIcon from '@mui/icons-material/Clear';
 import axios from "axios";
+import {makeStyles} from "@mui/styles";
 
 
 const style = {
@@ -21,8 +22,61 @@ const style = {
     p: '4',
 };
 
+const useStyles = makeStyles((theme) => ({
+    contactUs: {
+        textAlign: 'center',
+        marginTop: '10px',
+        fontSize: '20px',
+        color: 'white',
+    },
+    modalContent: {
+        backgroundColor: '#212937',
+        width: '30%',
+        margin: '10% auto',
+        padding: '20px',
+        border: '1px solid #3bd671',
+        borderRadius: '10px',
+        color: 'white',
+        [theme.breakpoints.down('md')]: {
+            width: '90%',
+            margin: '30% auto',
+            padding: '15px',
+        },
+    },
+    inputContainer: {
+        position: 'relative',
+        marginBottom: '10px',
+    },
+    ideaInput: {
+        width: '100%',
+        padding: '10px',
+        border: 'none',
+        backgroundColor: '#131a26',
+        color: 'white !important',
+        fontSize: '16px',
+        borderRadius: '5px',
+        outline: 'none',
+        resize: 'none',
+    },
+    clearIcon: {
+        position: 'absolute',
+        top: '50%',
+        right: '0',
+        transform: 'translateY(-50%)',
+        cursor: 'pointer',
+        fontSize: '28px',
+        color: '#3bd671',
+    },
+    clearIconHover: {
+        '&:hover': {
+            color: '#fff',
+        },
+    },
+}));
 
 const Feedback = () => {
+    const classes = useStyles();
+
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => {
@@ -57,7 +111,6 @@ const Feedback = () => {
         setIdea("");
     };
 
-
     return (
         <div className="contact-us">
             <p>Хочете запропонувати анекдот <br/> чи знайшли помилку?</p>
@@ -76,37 +129,43 @@ const Feedback = () => {
                 }}>
                 <Fade in={open}>
                     <Box sx={style}>
-                        <div className="modal-content">
+                        <div className={classes.modalContent}>
                             <IconButton style={{float: 'right', right: -5, top: -5}} onClick={handleClose}><ClearIcon
                                 sx={{color: '#3bd671', fontSize: '20px'}}/></IconButton>
                             <h2>Ваша ідея або анекдот:</h2>
-                            <div className="input-container">
+                            <div className={classes.inputContainer}>
                                 <TextField id="full-width"
                                            InputProps={{
-                                               className: 'idea-input',
-                                               endAdornment: (<InputAdornment onClick={() => setIdea('')} position="end"><HighlightOffIcon sx={{
-                                                   color: '#3bd671', fontSize: '20px' }}/> < /InputAdornment>)}}
-                                                   variant = "outlined"
-                                                   value = {idea}
-                                                   onChange = {(event) => {setIdea(event.target.value); setError('')}}
-                                                   multiline
-                                                   rows={4}
-                                                   placeholder="Напишіть вашу ідею або анекдот..."
-                                                   fullWidth
-                                                   error={!!error}
-                                                   helperText={error}
-                                                   />
-                                               </div>
-                                               <Stack direction="row" spacing={1}>
-                                    <Button size='small' variant="outlined" color="error" onClick={() => {
-                                        setOpen(false);
-                                        setIdea('');
-                                        setError('');
-                                    }}>Скасувати</Button>
-
-                                    <Button size='small' variant="contained" onClick={sendIdea}>Відправити</Button>
-                                </Stack>
+                                               className: classes.ideaInput,
+                                               endAdornment: (<InputAdornment onClick={() => setIdea('')}
+                                                                              position="end"><HighlightOffIcon sx={{
+                                                   color: '#3bd671', fontSize: '20px'
+                                               }}/> < /InputAdornment>)
+                                           }}
+                                           variant="outlined"
+                                           value={idea}
+                                           onChange={(event) => {
+                                               setIdea(event.target.value);
+                                               setError('')
+                                           }}
+                                           multiline
+                                           rows={4}
+                                           placeholder="Напишіть вашу ідею або анекдот..."
+                                           fullWidth
+                                           error={!!error}
+                                           helperText={error}
+                                />
                             </div>
+                            <Stack direction="row" spacing={1}>
+                                <Button size='small' variant="outlined" color="error" onClick={() => {
+                                    setOpen(false);
+                                    setIdea('');
+                                    setError('');
+                                }}>Скасувати</Button>
+
+                                <Button size='small' variant="contained" onClick={sendIdea}>Відправити</Button>
+                            </Stack>
+                        </div>
                     </Box>
                 </Fade>
             </Modal>
@@ -114,4 +173,4 @@ const Feedback = () => {
     );
 }
 
-    export default Feedback
+export default Feedback

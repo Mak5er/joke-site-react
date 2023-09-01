@@ -24,4 +24,5 @@ yarn-error.log*
 
 venv
 
-.env
+backend/.env
+build

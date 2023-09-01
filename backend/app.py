@@ -43,13 +43,10 @@ def get_random_joke():
 def serve():
     return send_from_directory(app.static_folder, "index.html")
 
-
+@cross_origin()
 @app.route('/favicon.ico')
 def favicon():
     return send_from_directory(app.static_folder, 'favicon.ico')
-
-
-last_request_time = 0
 
 
 @cross_origin()
