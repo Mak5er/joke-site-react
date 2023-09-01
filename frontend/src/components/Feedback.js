@@ -9,18 +9,8 @@ import IconButton from '@mui/material/IconButton';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import ClearIcon from '@mui/icons-material/Clear';
 import axios from "axios";
-import {makeStyles} from "@mui/styles";
+import {makeStyles, useTheme} from '@mui/styles';
 
-
-const style = {
-    position: 'absolute',
-    top: "50%",
-    left: "50%",
-    transform: 'translate(-50%, -50%)',
-    width: '100%',
-    height: '100%',
-    p: '4',
-};
 
 const useStyles = makeStyles((theme) => ({
     contactUs: {
@@ -29,20 +19,7 @@ const useStyles = makeStyles((theme) => ({
         fontSize: '20px',
         color: 'white',
     },
-    modalContent: {
-        backgroundColor: '#212937',
-        width: '30%',
-        margin: '10% auto',
-        padding: '20px',
-        border: '1px solid #3bd671',
-        borderRadius: '10px',
-        color: 'white',
-        [theme.breakpoints.down('md')]: {
-            width: '90%',
-            margin: '30% auto',
-            padding: '15px',
-        },
-    },
+
     inputContainer: {
         position: 'relative',
         marginBottom: '10px',
@@ -112,7 +89,7 @@ const Feedback = () => {
     };
 
     return (
-        <div className="contact-us">
+        <div className={classes.contactUs}>
             <p>Хочете запропонувати анекдот <br/> чи знайшли помилку?</p>
             <Button size="medium" variant="outlined" onClick={handleOpen}>Зв'язатися з нами</Button>
             <Modal
@@ -128,8 +105,15 @@ const Feedback = () => {
                     },
                 }}>
                 <Fade in={open}>
-                    <Box sx={style}>
-                        <div className={classes.modalContent}>
+                    <Box sx={{
+                        position: 'absolute',
+                        top: "50%",
+                        left: "50%",
+                        transform: 'translate(-50%, -50%)',
+                        width: '100%',
+                        height: '100%',
+                        p: '4',}}>
+                        <div className="modalContent">
                             <IconButton style={{float: 'right', right: -5, top: -5}} onClick={handleClose}><ClearIcon
                                 sx={{color: '#3bd671', fontSize: '20px'}}/></IconButton>
                             <h2>Ваша ідея або анекдот:</h2>
