@@ -97,7 +97,7 @@ const Feedback = () => {
 
         try {
             const response = await axios.post(
-                "/api/send_idea",
+                "/send_idea",
                 {
                     idea,
                 }

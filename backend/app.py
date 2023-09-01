@@ -41,23 +41,18 @@ def get_random_joke():
 @cross_origin()
 @app.route('/')
 def serve():
-    return send_from_directory(app.static_folder, "index.html")
-
-@cross_origin()
-@app.route('/favicon.ico')
-def favicon():
-    return send_from_directory(app.static_folder, 'favicon.ico')
+    return 'helloworld'
 
 
 @cross_origin()
-@app.route('/api/get_random_joke', methods=['GET'])
+@app.route('/get_random_joke', methods=['GET'])
 def get_random_joke_ajax():
     joke = get_random_joke()
     return jsonify({'joke': joke})
 
 
 @cross_origin()
-@app.route('/api/send_idea', methods=['POST'])
+@app.route('/send_idea', methods=['POST'])
 def send_idea():
     idea = request.json['idea']
     encoded_idea = quote(idea)
