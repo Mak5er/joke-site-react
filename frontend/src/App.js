@@ -1,10 +1,17 @@
 import './App.css';
 import Home from './pages/Home';
 import Api from './pages/Api';
-import { ThemeProvider } from '@mui/material/styles';
+import {createTheme, ThemeProvider} from '@mui/material/styles';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import theme from './themes/theme';
+import {green} from "@mui/material/colors";
 
+const theme  = createTheme({
+    palette: {
+        primary: {
+            main: green[500],
+        },
+    },
+})
 
 
 function App() {

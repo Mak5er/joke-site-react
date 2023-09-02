@@ -74,7 +74,7 @@ const Feedback = () => {
 
         try {
             const response = await axios.post(
-                "/send_idea",
+                "https://api.anekdoty.pp.ua/send_idea",
                 {
                     idea,
                 }
