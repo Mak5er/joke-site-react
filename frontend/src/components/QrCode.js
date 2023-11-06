@@ -36,10 +36,10 @@ const QrCode = () => {
     return (
         <div className={classes.qrContainer}>
             <h2>Бажаєте більше анекдотів?<br/>
-                Тоді <a className={classes.telegramLink} href="https://t.me/AnekdotykyUaBot?start=ref6013011895" target="_blank"
+                Тоді <a className={classes.telegramLink} href="https://t.me/AnekdotyRobot?start=ref6013011895" target="_blank"
                         rel="noreferrer">переходьте до телеграм бота</a>!</h2>
             <p className="scan-notice">Проскануйте або натисніть на QR-код</p>
-            <a href="https://t.me/AnekdotykyUaBot?start=ref6013011895" target="_blank" rel="noreferrer">
+            <a href="https://t.me/AnekdotyRobot?start=ref6013011895" target="_blank" rel="noreferrer">
                 <img className={classes.qrCode} src="images/qr-code.webp" alt="QR Code"/></a>
         </div>
     );
