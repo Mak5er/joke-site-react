@@ -1,7 +1,9 @@
 import os
+
 import psycopg2
 from dotenv import load_dotenv
 from flask import Flask, jsonify, request
+from flask import send_from_directory
 from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
@@ -38,6 +40,12 @@ db = DataBase(os.getenv("db_auth"))
 @app.route('/')
 def serve():
     return 'helloworld'
+
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'),
+                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 
 @cross_origin()
