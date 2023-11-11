@@ -17,7 +17,7 @@ limiter = Limiter(
     app=app,
     key_func=get_remote_address,
     storage_uri="memory://",
-    default_limits=["1 per second"]  # Adjust the limits as per your requirements
+    default_limits=["10 per second"]  # Adjust the limits as per your requirements
 )
 
 class DataBase:
@@ -54,13 +54,11 @@ def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'),
                                'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
-@limiter.limit('1 per second')
 @cross_origin()
 @app.route('/get_random_joke', methods=['GET'])
 def get_random_joke_ajax():
     return jsonify(db.get_random_joke())
 
-@limiter.limit('1 per second')
 @cross_origin()
 @app.route('/send_idea', methods=['POST'])
 def send_idea():
