@@ -5,12 +5,20 @@ from dotenv import load_dotenv
 from flask import Flask, jsonify, request
 from flask import send_from_directory
 from flask_cors import CORS, cross_origin
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 
 app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 load_dotenv()
 
+limiter = Limiter(
+    app=app,
+    key_func=get_remote_address,
+    storage_uri="memory://",
+    default_limits=["1 per second"]  # Adjust the limits as per your requirements
+)
 
 class DataBase:
     def __init__(self, db_auth):
@@ -35,7 +43,6 @@ class DataBase:
 
 db = DataBase(os.getenv("db_auth"))
 
-
 @cross_origin()
 @app.route('/')
 def serve():
@@ -47,13 +54,13 @@ def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'),
                                'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
-
+@limiter.limit('1 per second')
 @cross_origin()
 @app.route('/get_random_joke', methods=['GET'])
 def get_random_joke_ajax():
     return jsonify(db.get_random_joke())
 
-
+@limiter.limit('1 per second')
 @cross_origin()
 @app.route('/send_idea', methods=['POST'])
 def send_idea():
