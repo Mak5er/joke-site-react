@@ -4,8 +4,8 @@ import Grid from "@mui/material/Grid";
 
 export const ApiDescription = () => {
     const jokesApiMethods = [
-        {path: 'https://api.anekdoty.pp.ua/get_random_joke', description: 'Отримати випадковий анекдот'},
-        {path: 'https://api.anekdoty.pp.ua/send_idea', description: 'Відпраити ідею або помилку'},
+        { path: 'https://api.anekdoty.pp.ua/get_random_joke', description: 'Отримати випадковий анекдот' },
+        { path: 'https://api.anekdoty.pp.ua/send_idea', description: 'Відправити ідею або помилку' },
         // Додайте інші методи API та їх описи
     ];
 
@@ -29,14 +29,14 @@ export const ApiDescription = () => {
 
                         }}>
                             <Typography variant="h5" component="h2">
-                                {method.path}
+                                <a href={method.path} style={{ color: 'white', textDecoration: 'none' }}>{method.path}</a>
                             </Typography>
                             <Typography>{method.description}</Typography>
                         </Grid>
                         <Grid item sm={4} xs={0}></Grid>
                     </Grid>
                 </div>
-                ))}
+            ))}
         </div>
     );
 };
