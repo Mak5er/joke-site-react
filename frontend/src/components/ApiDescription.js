@@ -4,7 +4,8 @@ import Grid from "@mui/material/Grid";
 
 export const ApiDescription = () => {
     const jokesApiMethods = [
-        {path: '/api/get_random_joke', description: 'Отримати випадковий анекдот'},
+        {path: 'https://api.anekdoty.pp.ua/get_random_joke', description: 'Отримати випадковий анекдот'},
+        {path: 'https://api.anekdoty.pp.ua/send_idea', description: 'Відпраити ідею або помилку'},
         // Додайте інші методи API та їх описи
     ];
 
