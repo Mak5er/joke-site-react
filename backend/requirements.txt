@@ -12,3 +12,4 @@ Flask-Cors~=4.0.0
 gunicorn~=21.2.0
 psycopg2-binary
 flask_limiter
+python-telegram-bot
