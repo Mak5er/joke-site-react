@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from "react";
-import {useLocation, useNavigate} from "react-router-dom"; // Import necessary components for URL manipulation
 
 import axios from "axios";
 import Grid from "@mui/material/Grid";
@@ -36,11 +35,9 @@ const RandomJoke = () => {
     const [joke, setJoke] = useState("");
     const [likes, setLikes] = useState(0);
     const [dislikes, setDislikes] = useState(0);
-    const [joke_id, setJokeID] = useState(0);
     const [disabled, setDisabled] = useState(false);
     const [open, setOpen] = useState(false);
     const [category, setCategory] = useState('');
-    const navigate = useNavigate();
 
     const getJoke = async () => {
         if (disabled) return;
@@ -49,7 +46,6 @@ const RandomJoke = () => {
         setJoke(data.joke);
         setLikes(data.likes || 0);
         setDislikes(data.dislikes || 0);
-        setJokeID(data.joke_id || 0);
         setTimeout(() => {
             setDisabled(false);
         }, 1000);
@@ -65,7 +61,6 @@ const RandomJoke = () => {
         setJoke(data.joke);
         setLikes(data.likes || 0);
         setDislikes(data.dislikes || 0);
-        setJokeID(data.joke_id || 0);
         setTimeout(() => {
             setDisabled(false);
         }, 1000);

@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  backend:
+    build:
+      context: ./backend
+    container_name: backend
+    ports:
+      - "3032:3032" # Замініть на необхідний порт для вашого бекенду
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: frontend
+    ports:
+      - "3033:3033" # Замініть на необхідний порт для вашого фронтенду
+

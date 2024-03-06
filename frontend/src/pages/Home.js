@@ -2,7 +2,6 @@ import RandomJoke from "../components/RandomJoke";
 import QrCode from "../components/QrCode";
 import Feedback from "../components/Feedback";
 
-
 const Home = () => {
     return (
         <div>
