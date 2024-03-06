@@ -1,5 +1,5 @@
 # React Jokes App
-Welcome to the React Jokes App! This project consists of a React frontend and a Flask backend, designed to bring laughter to your day with a collection of ukrainian jokes🇺🇦.
+Welcome to the React Jokes App! This project consists of a React frontend and a Flask backend, designed to bring laughter to your day with a collection of ukrainian jokes🇺🇦
 
 ## Getting Started
 Follow these steps to set up and run the React Jokes App:
