@@ -9,7 +9,7 @@ import IconButton from '@mui/material/IconButton';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import ClearIcon from '@mui/icons-material/Clear';
 import axios from "axios";
-import {makeStyles, useTheme} from '@mui/styles';
+import {makeStyles} from '@mui/styles';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -65,6 +65,7 @@ const Feedback = () => {
 
     const [error, setError] = React.useState('');
 
+    const REACT_APP_API_URL = process.env.REACT_APP_API_URL;
 
     const sendIdea = async () => {
         if (idea.trim() === "") {
@@ -74,7 +75,7 @@ const Feedback = () => {
 
         try {
             const response = await axios.post(
-                "https://api.anekdoty.pp.ua/send_idea",
+                `${REACT_APP_API_URL}/send_idea`,
                 {
                     idea,
                 }
@@ -112,7 +113,8 @@ const Feedback = () => {
                         transform: 'translate(-50%, -50%)',
                         width: '100%',
                         height: '100%',
-                        p: '4',}}>
+                        p: '4',
+                    }}>
                         <div className="modalContent">
                             <IconButton style={{float: 'right', right: -5, top: -5}} onClick={handleClose}><ClearIcon
                                 sx={{color: '#3bd671', fontSize: '20px'}}/></IconButton>

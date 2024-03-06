@@ -27,13 +27,30 @@ class DataBase:
         self.cursor = self.connection.cursor()
 
     def get_random_joke(self):
-        self.cursor.execute('SELECT text FROM jokes_uk ORDER BY RANDOM() LIMIT 1;')
-        joke = self.cursor.fetchone()
+        category = request.args.get('category')
+
+        # Filter the query based on the category
+        if category:
+            jokes_query = f"SELECT text, id FROM jokes_uk WHERE tags LIKE '{category}' ORDER BY RANDOM() LIMIT 1;"
+        else:
+            jokes_query = 'SELECT text, id FROM jokes_uk ORDER BY RANDOM() LIMIT 1;'
+
+        db.cursor.execute(jokes_query)
+        joke = db.cursor.fetchone()
 
         if joke:
-            return {'joke': joke[0]}
+            joke_text, id = joke
+
+            # Отримання кількості лайків і дизлайків
+            self.cursor.execute('SELECT COUNT(*) FROM votes WHERE id = %s AND vote_type = %s', (id, 'like'))
+            likes = self.cursor.fetchone()[0]
+            self.cursor.execute('SELECT COUNT(*) FROM votes WHERE id = %s AND vote_type = %s', (id, 'dislike'))
+            dislikes = self.cursor.fetchone()[0]
+
+            # Формування результату
+            return {'joke': joke_text, 'joke_id': id,'likes': likes, 'dislikes': dislikes}
         else:
-            return {'joke': 'No jokes found'}
+            return {'joke': 'Анекдотів не знайдено'}
 
     def send_idea(self, idea):
         self.cursor.execute("INSERT INTO ideas (text) VALUES (%s);", (idea,))
