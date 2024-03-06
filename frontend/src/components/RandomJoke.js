@@ -1,18 +1,17 @@
 import React, {useEffect, useState} from "react";
+import {useLocation, useNavigate} from "react-router-dom"; // Import necessary components for URL manipulation
 
 import axios from "axios";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbDownIcon from "@mui/icons-material/ThumbDown";
-import {Button, InputAdornment, TextField} from "@mui/material";
+import {Button} from "@mui/material";
 import Backdrop from '@mui/material/Backdrop';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Fade from '@mui/material/Fade';
-import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
-import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import ClearIcon from '@mui/icons-material/Clear';
 import {makeStyles} from '@mui/styles';
 
@@ -37,17 +36,20 @@ const RandomJoke = () => {
     const [joke, setJoke] = useState("");
     const [likes, setLikes] = useState(0);
     const [dislikes, setDislikes] = useState(0);
+    const [joke_id, setJokeID] = useState(0);
     const [disabled, setDisabled] = useState(false);
     const [open, setOpen] = useState(false);
     const [category, setCategory] = useState('');
+    const navigate = useNavigate();
 
     const getJoke = async () => {
         if (disabled) return;
         setDisabled(true);
-        const {data} = await axios.get(`${REACT_APP_API_URL}/get_random_joke`);
+        const { data } = await axios.get(`${REACT_APP_API_URL}/get_random_joke`);
         setJoke(data.joke);
         setLikes(data.likes || 0);
         setDislikes(data.dislikes || 0);
+        setJokeID(data.joke_id || 0);
         setTimeout(() => {
             setDisabled(false);
         }, 1000);
@@ -58,12 +60,12 @@ const RandomJoke = () => {
         setCategory(category);
         if (disabled) return;
         setDisabled(true);
-        // Build the API URL with the selected category
         const categoryUrlParam = `?category=${category}`;
-        const {data} = await axios.get(`${REACT_APP_API_URL}/get_random_joke${categoryUrlParam}`);
+        const { data } = await axios.get(`${REACT_APP_API_URL}/get_random_joke${categoryUrlParam}`);
         setJoke(data.joke);
         setLikes(data.likes || 0);
         setDislikes(data.dislikes || 0);
+        setJokeID(data.joke_id || 0);
         setTimeout(() => {
             setDisabled(false);
         }, 1000);
@@ -98,7 +100,7 @@ const RandomJoke = () => {
                 <Grid item md={3} sm={0}></Grid>
             </Grid>
             <Grid container mt={1} justifyContent="center">
-                <Grid item mr={2} >
+                <Grid item mr={2}>
                     <Typography variant="body1" component="div" sx={{display: 'flex', alignItems: 'center'}}>
                         <ThumbUpIcon fontSize="large" sx={{color: "green"}}/>
                         <span style={{color: "green", marginLeft: '8px'}}>{likes}</span>
@@ -119,7 +121,7 @@ const RandomJoke = () => {
                 </Grid>
                 <Grid item>
                     <Button color="primary" size="large" variant="outlined" onClick={() => setOpen(true)}>
-                        Категорії
+                        Обрати Категорію
                     </Button>
                 </Grid>
             </Grid>
@@ -152,35 +154,50 @@ const RandomJoke = () => {
                             <Grid container spacing={2}>
                                 <Grid container justifyContent="center">
                                     <Grid item mr={2} mt={2}>
-                                        <Button color="primary" size="large" variant="outlined" onClick={() => handleCategoryClick('про_гроші')} mb={2}>💵Гроші</Button>
+                                        <Button color="primary" size="large" variant="outlined"
+                                                onClick={() => handleCategoryClick('про_гроші')} mb={2}>💵Гроші</Button>
                                     </Grid>
                                     <Grid item mr={2} mt={2}>
-                                        <Button color="primary" size="large" variant="outlined" onClick={() => handleCategoryClick('про_родину')} mb={2}>👨‍👩‍👦‍👦Родина</Button>
+                                        <Button color="primary" size="large" variant="outlined"
+                                                onClick={() => handleCategoryClick('про_родину')}
+                                                mb={2}>👨‍👩‍👦‍👦Родина</Button>
                                     </Grid>
                                     <Grid item mr={2} mt={2}>
-                                        <Button color="primary" size="large" variant="outlined" onClick={() => handleCategoryClick('про_білявок')} mb={2}>👱‍♀️Блондинки</Button>
-                                    </Grid>
-                                </Grid>
-                                <Grid container justifyContent="center">
-                                    <Grid item mr={2} mt={2}>
-                                        <Button color="primary" size="large" variant="outlined" onClick={() => handleCategoryClick('про_тещу')} mb={2}>👵Теща</Button>
-                                    </Grid>
-                                    <Grid item mr={2} mt={2}>
-                                        <Button color="primary" size="large" variant="outlined" onClick={() => handleCategoryClick('про_школу')} mb={2}>🏫Школа</Button>
-                                    </Grid>
-                                    <Grid item mr={2} mt={2}>
-                                        <Button color="primary" size="large" variant="outlined" onClick={() => handleCategoryClick('про_вовочку')} mb={2}>👦Вовочка</Button>
+                                        <Button color="primary" size="large" variant="outlined"
+                                                onClick={() => handleCategoryClick('про_білявок')}
+                                                mb={2}>👱‍♀️Блондинки</Button>
                                     </Grid>
                                 </Grid>
                                 <Grid container justifyContent="center">
                                     <Grid item mr={2} mt={2}>
-                                        <Button color="primary" size="large" variant="outlined" onClick={() => handleCategoryClick('про_медицину')} mb={2}>🏥Медицина</Button>
+                                        <Button color="primary" size="large" variant="outlined"
+                                                onClick={() => handleCategoryClick('про_тещу')} mb={2}>👵Теща</Button>
                                     </Grid>
                                     <Grid item mr={2} mt={2}>
-                                        <Button color="primary" size="large" variant="outlined" onClick={() => handleCategoryClick('про_студентів')} mb={2}>🎓Студенти</Button>
+                                        <Button color="primary" size="large" variant="outlined"
+                                                onClick={() => handleCategoryClick('про_школу')} mb={2}>🏫Школа</Button>
                                     </Grid>
                                     <Grid item mr={2} mt={2}>
-                                        <Button color="primary" size="large" variant="outlined" onClick={() => handleCategoryClick('про_роботу')} mb={2}>🏢Робота</Button>
+                                        <Button color="primary" size="large" variant="outlined"
+                                                onClick={() => handleCategoryClick('про_вовочку')}
+                                                mb={2}>👦Вовочка</Button>
+                                    </Grid>
+                                </Grid>
+                                <Grid container justifyContent="center">
+                                    <Grid item mr={2} mt={2}>
+                                        <Button color="primary" size="large" variant="outlined"
+                                                onClick={() => handleCategoryClick('про_медицину')}
+                                                mb={2}>🏥Медицина</Button>
+                                    </Grid>
+                                    <Grid item mr={2} mt={2}>
+                                        <Button color="primary" size="large" variant="outlined"
+                                                onClick={() => handleCategoryClick('про_студентів')}
+                                                mb={2}>🎓Студенти</Button>
+                                    </Grid>
+                                    <Grid item mr={2} mt={2}>
+                                        <Button color="primary" size="large" variant="outlined"
+                                                onClick={() => handleCategoryClick('про_роботу')}
+                                                mb={2}>🏢Робота</Button>
                                     </Grid>
                                 </Grid>
                             </Grid>
