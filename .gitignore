@@ -26,3 +26,4 @@ venv
 
 backend/.env
 frontend/build
+frontend/.env
